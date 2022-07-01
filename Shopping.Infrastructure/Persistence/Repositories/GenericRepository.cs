@@ -9,7 +9,6 @@ namespace Shopping.Infrastructure.Persistence.Repositories
         where T : class,IBaseEntity,new()
     {
 
-
         protected readonly ApplicationDbContext _applicationDbContext;
         protected readonly DbSet<T> _dbSet;
         public GenericRepository(ApplicationDbContext applicationDbContext)
@@ -17,6 +16,8 @@ namespace Shopping.Infrastructure.Persistence.Repositories
             _applicationDbContext = applicationDbContext;
             _dbSet = _applicationDbContext.Set<T>();
         }
+        
+
         public async Task<bool> Add(T entity)
         {
             await _dbSet.AddAsync(entity);

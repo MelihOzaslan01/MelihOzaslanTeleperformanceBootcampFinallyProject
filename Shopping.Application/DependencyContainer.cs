@@ -3,6 +3,8 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Shopping.Application.Auth;
+using Shopping.Application.Auth.Interfaces;
 using Shopping.Application.Common.Behaviours;
 using Shopping.Application.Mapping.AutoMapper;
 
@@ -12,6 +14,7 @@ namespace Shopping.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddTransient<IAuthService, AuthService>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
