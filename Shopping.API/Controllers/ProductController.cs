@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shopping.API.Controllers.Interfaces;
-using Shopping.Application.Product.Queries.GetProductsByShoppingListId;
 using Shopping.Application.ProductCQRS.Commands.CreateProduct;
 using Shopping.Application.ProductCQRS.Commands.DeleteProduct;
 using Shopping.Application.ProductCQRS.Commands.UpdateProduct;
@@ -10,10 +11,8 @@ using Shopping.Application.ProductCQRS.Queries.GetProductsByShoppingListId;
 
 namespace Shopping.API.Controllers
 {
-    
-
-
-   [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "User")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductController : BaseController
     {
