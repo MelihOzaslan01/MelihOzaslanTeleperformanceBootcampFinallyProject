@@ -19,7 +19,7 @@ namespace Shopping.Infrastructure.Persistence
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("A FALLBACK CONNECTION STRING");
+                options.UseSqlServer("DefaultShoppingLocal");
             }
         }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
