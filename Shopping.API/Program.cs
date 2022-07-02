@@ -1,7 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Shopping.API.Extensions;
 using Shopping.Application;
@@ -12,13 +11,6 @@ using Shopping.Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("DefaultShopping"))
-);
-builder.Services.AddDbContext<AdminDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("DefaultShoppingAdmin"))
-);
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddRoles<IdentityRole>()
@@ -44,14 +36,16 @@ builder.Services.AddAuthentication(options =>
 }); 
 
 // Add services to the container.
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration,builder.Environment.EnvironmentName);
+builder.Services.AddApplicationServices();
+
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedMemoryCache();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 app.MigrateDatabase();
@@ -62,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -31,16 +31,16 @@ public class UpdateShoppingListCommandHandlerTest
     [Fact]
     public async void UpdateShoppingList_IsFailure()
     {
-        var createShoppingListCommandRequest = new Bogus.Faker<CreateShoppingListCommandRequest>();
+        var updateShoppingListCommandRequest = new Bogus.Faker<UpdateShoppingListCommandRequest>();
         
         var mockRepository = new Mock<IShoppingListRepository>();
         mockRepository.Setup(c => c.Add(It.IsAny<Domain.Entities.ShoppingList>())).ReturnsAsync(false);
 
         var mockCache = new Mock<IDistributedCache>();
 
-        var command = new CreateShoppingListCommandHandler(mockRepository.Object, mockCache.Object);
+        var command = new UpdateShoppingListCommandHandler(mockRepository.Object, mockCache.Object);
         
-        var response = await command.Handle(createShoppingListCommandRequest.Generate(), CancellationToken.None);
+        var response = await command.Handle(updateShoppingListCommandRequest.Generate(), CancellationToken.None);
         response.ShoppingList = null;
         
         Assert.False(response.IsSuccess);

@@ -8,7 +8,7 @@ namespace Shopping.Infrastructure.Persistence.Repositories
     public class GenericRepository<T> : IGenericRepository<T>
         where T : class,IBaseEntity,new()
     {
-
+        
         protected readonly ApplicationDbContext _applicationDbContext;
         protected readonly DbSet<T> _dbSet;
         public GenericRepository(ApplicationDbContext applicationDbContext)

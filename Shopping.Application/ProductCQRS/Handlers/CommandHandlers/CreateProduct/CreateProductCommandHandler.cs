@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ProductCQRS.Commands.CreateProduct;
+using Shopping.Domain.Entities;
+
 
 namespace Shopping.Application.ProductCQRS.Handlers.CommandHandlers.CreateProduct;
 
@@ -19,7 +21,7 @@ namespace Shopping.Application.ProductCQRS.Handlers.CommandHandlers.CreateProduc
         }
         public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            var product = new Domain.Entities.Product
+            var product = new Product
             {
                 Name = request.Name,
                 ShoppingListId = request.ShoppingListId,

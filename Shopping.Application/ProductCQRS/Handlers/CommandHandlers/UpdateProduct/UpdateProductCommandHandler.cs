@@ -2,6 +2,8 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ProductCQRS.Commands.UpdateProduct;
+using Shopping.Domain.Entities;
+
 
 namespace Shopping.Application.ProductCQRS.Handlers.CommandHandlers.UpdateProduct;
 
@@ -21,7 +23,7 @@ public class UpdateProductCommandHandler:IRequestHandler<UpdateProductCommandReq
         
         var updateProductCommandResponse = new UpdateProductCommandResponse();
       
-        var productToUpdate = new Domain.Entities.Product
+        var productToUpdate = new Product
         {
             Id = request.Id,
             Name = request.Name,

@@ -8,7 +8,7 @@ public class MappingProfile:Profile
 {
     public MappingProfile()
     {
-        CreateMap<Domain.Entities.Product, ProductDto>().ReverseMap();
+        CreateMap<Product, ProductDto>().ReverseMap();
         CreateMap<ShoppingList, ShoppingListDto>().ReverseMap();
     }
 }

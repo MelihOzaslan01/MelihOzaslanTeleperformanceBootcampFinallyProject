@@ -9,14 +9,28 @@ namespace Shopping.Infrastructure
 {
     public static class DependencyContainer
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration,string env="Development")
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default"))
-            );
-
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IShoppingListRepository, ShoppingListRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            if (env=="Test")
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase("appTestDb"));
+                services.AddDbContext<AdminDbContext>(options =>
+                    options.UseInMemoryDatabase("adminAppTestDb"));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultShopping"))
+                );
+                services.AddDbContext<AdminDbContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultShoppingAdmin"))
+                );
+            
+                services.AddTransient<IProductRepository, ProductRepository>();
+                services.AddTransient<IShoppingListRepository, ShoppingListRepository>();
+                services.AddTransient<IUserRepository, UserRepository>();
+            }
 
             return services;
         }

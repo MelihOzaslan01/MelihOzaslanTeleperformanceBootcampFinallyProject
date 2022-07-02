@@ -6,7 +6,7 @@ namespace Shopping.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         DbSet<User> Users { get; }
-        DbSet<Domain.Entities.Product> Products { get; }
+        DbSet<Product> Products { get; }
         DbSet<ShoppingList> ShoppingLists { get; }
 
     }
