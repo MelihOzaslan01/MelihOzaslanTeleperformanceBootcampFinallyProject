@@ -12,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+builder.Services.AddInfrastructureServices(builder.Configuration,builder.Environment.EnvironmentName);
+builder.Services.AddApplicationServices();
+
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -36,9 +39,6 @@ builder.Services.AddAuthentication(options =>
 }); 
 
 // Add services to the container.
-builder.Services.AddInfrastructureServices(builder.Configuration,builder.Environment.EnvironmentName);
-builder.Services.AddApplicationServices();
-
 builder.Services.AddControllers();
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedMemoryCache();

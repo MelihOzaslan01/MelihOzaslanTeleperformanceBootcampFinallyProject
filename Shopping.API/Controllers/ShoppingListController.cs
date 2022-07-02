@@ -56,7 +56,7 @@ public class ShoppingListController:BaseController
 
         return Ok(result);
     }
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Admin")]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Admin")]
     [HttpGet("GetShoppingLists")]
     public async Task<IActionResult> GetShoppingLists()
     {

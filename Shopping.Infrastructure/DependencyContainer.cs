@@ -26,12 +26,12 @@ namespace Shopping.Infrastructure
                 services.AddDbContext<AdminDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultShoppingAdmin"))
                 );
-            
-                services.AddTransient<IProductRepository, ProductRepository>();
-                services.AddTransient<IShoppingListRepository, ShoppingListRepository>();
-                services.AddTransient<IUserRepository, UserRepository>();
             }
 
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IShoppingListRepository, ShoppingListRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            
             return services;
         }
     }

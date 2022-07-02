@@ -16,7 +16,6 @@
 
     <ItemGroup>
       <Folder Include="Controllers\ShoppingList" />
-      <Folder Include="Controllers\User" />
       <Folder Include="Services\Auth" />
     </ItemGroup>
 
