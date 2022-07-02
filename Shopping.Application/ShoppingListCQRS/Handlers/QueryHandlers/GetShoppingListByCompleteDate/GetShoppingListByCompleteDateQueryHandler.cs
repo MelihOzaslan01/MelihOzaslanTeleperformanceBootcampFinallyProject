@@ -28,6 +28,11 @@ public class
         var getShoppingListByCompleteDateQueryResponse = new GetShoppingListByCompleteDateQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.CompleteDate == request.CompleteDate);
+        if (shoppingLists==null)
+        {
+            getShoppingListByCompleteDateQueryResponse.IsSuccess = false;
+            return getShoppingListByCompleteDateQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

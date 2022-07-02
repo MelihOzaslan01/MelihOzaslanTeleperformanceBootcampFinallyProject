@@ -28,6 +28,11 @@ public class
         var getShoppingListByTitleQueryResponse = new GetShoppingListByTitleQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.Title == request.Title);
+        if (shoppingLists==null)
+        {
+            getShoppingListByTitleQueryResponse.IsSuccess = false;
+            return getShoppingListByTitleQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

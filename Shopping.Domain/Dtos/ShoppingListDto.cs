@@ -1,5 +1,3 @@
-using Shopping.Domain.Entities;
-
 namespace Shopping.Domain.Dtos;
 
 public class ShoppingListDto

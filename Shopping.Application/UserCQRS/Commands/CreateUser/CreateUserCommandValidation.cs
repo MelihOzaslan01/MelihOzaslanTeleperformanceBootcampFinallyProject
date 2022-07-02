@@ -1,5 +1,4 @@
 using FluentValidation;
-using Shopping.Domain.Entities;
 
 namespace Shopping.Application.UserCQRS.Commands.CreateUser;
 

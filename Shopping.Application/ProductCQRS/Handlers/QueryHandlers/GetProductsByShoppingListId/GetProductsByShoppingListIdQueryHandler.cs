@@ -1,7 +1,6 @@
 using AutoMapper;
 using MediatR;
 using Shopping.Application.Common.Interfaces.Repositories;
-using Shopping.Application.Product.Queries.GetProductsByShoppingListId;
 using Shopping.Application.ProductCQRS.Queries.GetProductsByShoppingListId;
 using Shopping.Domain.Dtos;
 

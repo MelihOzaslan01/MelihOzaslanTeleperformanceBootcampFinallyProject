@@ -6,7 +6,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ShoppingListCQRS.Queries.GetShoppingLists;
 using Shopping.Domain.Dtos;
-using Shopping.Domain.Entities;
 
 namespace Shopping.Application.ShoppingListCQRS.Handlers.QueryHandlers.GetShoppingLists;
 

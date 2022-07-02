@@ -23,15 +23,25 @@ public class GetShoppingListByIdQueryHandler:IRequestHandler<GetShoppingListById
     {
         var getShoppingListByIdQueryResponse = new GetShoppingListByIdQueryResponse();
 
-        var shoppingLists = await _shoppingListRepository.Get(x => x.Id == request.Id);
-        var products = await _productRepository.Get(x => x.ShoppingListId == shoppingLists.First().Id);
+        var shoppingList = await _shoppingListRepository.GetById(request.Id);
+        if (shoppingList==null)
+        {
+            getShoppingListByIdQueryResponse.IsSuccess = false;
+            return getShoppingListByIdQueryResponse;
+        }
+        var products = await _productRepository.Get(x => x.ShoppingListId == shoppingList.Id);
+        if (products==null)
+        {
+            getShoppingListByIdQueryResponse.IsSuccess = false;
+            return getShoppingListByIdQueryResponse;
+        }
         var productDtos = _mapper.Map<List<ProductDto>>(products);
-        var shoppingListDto = _mapper.Map<ShoppingListDto>(shoppingLists.SingleOrDefault());
+        var shoppingListDto = _mapper.Map<ShoppingListDto>(shoppingList);
         shoppingListDto.Products = productDtos;
        
 
         getShoppingListByIdQueryResponse.ShoppingList = shoppingListDto;
-        getShoppingListByIdQueryResponse.IsSuccess = shoppingLists!=null;
+        getShoppingListByIdQueryResponse.IsSuccess = shoppingList!=null;
 
         return getShoppingListByIdQueryResponse;
     }

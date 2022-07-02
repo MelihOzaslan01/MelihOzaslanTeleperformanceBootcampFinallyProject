@@ -28,6 +28,11 @@ public class
         var getShoppingListByCategoryQueryResponse = new GetShoppingListByCategoryQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.Category == request.Category);
+        if (shoppingLists==null)
+        {
+            getShoppingListByCategoryQueryResponse.IsSuccess = false;
+            return getShoppingListByCategoryQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

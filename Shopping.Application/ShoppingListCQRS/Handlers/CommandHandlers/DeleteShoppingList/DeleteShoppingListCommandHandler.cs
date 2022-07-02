@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ShoppingListCQRS.Commands.DeleteShoppingList;
-using Shopping.Application.ShoppingListCQRS.Commands.UpdateShoppingList;
 
 namespace Shopping.Application.ShoppingListCQRS.Handlers.CommandHandlers.DeleteShoppingList;
 

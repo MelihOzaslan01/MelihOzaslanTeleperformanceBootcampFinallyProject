@@ -29,6 +29,11 @@ public class
         var getShoppingListByDescriptionQueryResponse = new GetShoppingListByDescriptionQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.Description == request.Description);
+        if (shoppingLists==null)
+        {
+            getShoppingListByDescriptionQueryResponse.IsSuccess = false;
+            return getShoppingListByDescriptionQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

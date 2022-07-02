@@ -29,6 +29,11 @@ public class
         var getShoppingListByCreateDateQueryResponse = new GetShoppingListByCreateDateQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.CreateDate == request.CreateDate);
+        if (shoppingLists==null)
+        {
+            getShoppingListByCreateDateQueryResponse.IsSuccess = false;
+            return getShoppingListByCreateDateQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

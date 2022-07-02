@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ShoppingListCQRS.Commands.CompleteShoppingList;
-using Shopping.Application.ShoppingListCQRS.Commands.CreateShoppingList;
 using Shopping.Domain.Entities;
 
 namespace Shopping.Application.ShoppingListCQRS.Handlers.CommandHandlers.CompleteShoppingList;

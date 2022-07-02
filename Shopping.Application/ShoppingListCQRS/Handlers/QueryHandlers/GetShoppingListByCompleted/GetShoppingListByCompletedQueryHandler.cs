@@ -29,6 +29,11 @@ public class
         var getShoppingListByCompletedQueryResponse = new GetShoppingListByCompletedQueryResponse();
 
         var shoppingLists = await _shoppingListRepository.Get(x => x.IsCompleted == request.IsCompleted);
+        if (shoppingLists==null)
+        {
+            getShoppingListByCompletedQueryResponse.IsSuccess = false;
+            return getShoppingListByCompletedQueryResponse;
+        }
         var shoppingListDtos = new List<ShoppingListDto>();
         foreach (var shoppingList in shoppingLists)
         {

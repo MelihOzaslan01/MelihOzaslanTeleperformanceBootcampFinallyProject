@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ShoppingListCQRS.Queries.AdminGetShoppingLists;
-using Shopping.Application.ShoppingListCQRS.Queries.GetShoppingLists;
 using Shopping.Domain.Dtos;
 
 namespace Shopping.Application.ShoppingListCQRS.Handlers.QueryHandlers.AdminGetShoppingLists;
@@ -35,6 +34,11 @@ public class AdminGetShoppingListsQueryHandler:IRequestHandler<AdminGetShoppingL
         {
             var shoppingListDtos = new List<ShoppingListDto>();
             var shoppingLists =  await _shoppingListRepository.AdminGetAll();
+            if (shoppingLists==null)
+            {
+                adminGetShoppingListsQueryResponse.IsSuccess = false;
+                return adminGetShoppingListsQueryResponse;
+            }
             foreach (var shoppingList in shoppingLists)
             {
                 var shoppingListDto = _mapper.Map<ShoppingListDto>(shoppingList);

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Shopping.Application.Common.Interfaces.Repositories;
+﻿using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Domain.Entities;
 
 namespace Shopping.Infrastructure.Persistence.Repositories

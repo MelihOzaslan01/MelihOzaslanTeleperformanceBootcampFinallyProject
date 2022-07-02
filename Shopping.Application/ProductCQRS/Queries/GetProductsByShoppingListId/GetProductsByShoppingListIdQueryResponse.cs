@@ -1,7 +1,6 @@
 using Shopping.Domain.Dtos;
-using Shopping.Domain.Entities;
 
-namespace Shopping.Application.Product.Queries.GetProductsByShoppingListId;
+namespace Shopping.Application.ProductCQRS.Queries.GetProductsByShoppingListId;
 
 public class GetProductsByShoppingListIdQueryResponse
 {
