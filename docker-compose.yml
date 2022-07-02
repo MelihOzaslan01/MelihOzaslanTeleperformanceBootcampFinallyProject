@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  shopping-app:
+    container_name: shopping-app
+    image: ${DOCKER_REGISTRY-}shopping-app
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - "ConnectionStrings:DefaultShopping=Server=mssql,1433;Initial Catalog=ShoppingDB;User Id=sa;Password=Abc12345678+"
+      - "ConnectionStrings:DefaultShoppingAdmin=Server=mssql,1433;Initial Catalog=ShoppingAdminDB;User Id=sa;Password=Abc12345678+"
+    depends_on:
+      - mssql
+
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Abc12345678+"
+      ACCEPT_EULA: "Y"
