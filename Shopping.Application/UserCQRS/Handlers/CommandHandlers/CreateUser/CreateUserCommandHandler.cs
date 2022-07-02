@@ -11,20 +11,17 @@ namespace Shopping.Application.UserCQRS.Handlers.CommandHandlers.CreateUser;
 public class CreateUserCommandHandler:IRequestHandler<CreateUserCommandRequest,CreateUserCommandResponse>
 {
     private readonly UserManager<User> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IDistributedCache _distributedCache;
 
-    public CreateUserCommandHandler(UserManager<User> userManager, IDistributedCache distributedCache, RoleManager<IdentityRole> roleManager)
+    public CreateUserCommandHandler(UserManager<User> userManager, IDistributedCache distributedCache)
     {
         _userManager = userManager;
         _distributedCache = distributedCache;
-        _roleManager = roleManager;
     }
 
     public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
     {
         var createUserCommandResponse = new CreateUserCommandResponse();
-        //TODO MAPPING TO ALL COMMAND REQ TO ENTITY ALSO REVERSE
         var user = new User
         {
             FirstName = request.FirstName,

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Shopping.Application.Common.Interfaces.Repositories;
 using Shopping.Application.ShoppingListCQRS.Queries.GetShoppingLists;
 using Shopping.Domain.Dtos;
+using Shopping.Domain.Entities;
 
 namespace Shopping.Application.ShoppingListCQRS.Handlers.QueryHandlers.GetShoppingLists;
 
@@ -30,10 +31,15 @@ public class GetShoppingListsQueryHandler:IRequestHandler<GetShoppingListsQueryR
         var getShoppingListsQueryResponse = new GetShoppingListsQueryResponse();
         
         byte[] cachedBytes = _distributedCache.GetAsync("shoppingLists").Result;
-        if (cachedBytes == null)
+        if (cachedBytes == null || String.IsNullOrEmpty(Encoding.UTF8.GetString(cachedBytes)))
         {
             var shoppingListDtos = new List<ShoppingListDto>();
             var shoppingLists =  await _shoppingListRepository.GetAll();
+            if (shoppingLists==null)
+            {
+                getShoppingListsQueryResponse.IsSuccess = false;
+                return getShoppingListsQueryResponse;
+            }
             foreach (var shoppingList in shoppingLists)
             {
                 var shoppingListDto = _mapper.Map<ShoppingListDto>(shoppingList);
@@ -44,7 +50,7 @@ public class GetShoppingListsQueryHandler:IRequestHandler<GetShoppingListsQueryR
             }
 
             getShoppingListsQueryResponse.ShoppingLists = shoppingListDtos;
-            getShoppingListsQueryResponse.IsSuccess = true;
+            getShoppingListsQueryResponse.IsSuccess = shoppingLists!=null;
 
             string jsonText = JsonSerializer.Serialize(shoppingListDtos);
             await _distributedCache.SetAsync("shoppingLists", Encoding.UTF8.GetBytes(jsonText), token: cancellationToken);
@@ -54,7 +60,7 @@ public class GetShoppingListsQueryHandler:IRequestHandler<GetShoppingListsQueryR
             string jsonText = Encoding.UTF8.GetString(cachedBytes);
             var shoppingListDtos = JsonSerializer.Deserialize<List<ShoppingListDto>>(jsonText);
             getShoppingListsQueryResponse.ShoppingLists=shoppingListDtos;
-            getShoppingListsQueryResponse.IsSuccess = true;
+            getShoppingListsQueryResponse.IsSuccess = shoppingListDtos!=null;
         }
 
         return getShoppingListsQueryResponse;

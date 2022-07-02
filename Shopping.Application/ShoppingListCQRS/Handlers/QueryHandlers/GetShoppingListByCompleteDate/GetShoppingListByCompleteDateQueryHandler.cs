@@ -39,7 +39,7 @@ public class
         }
 
         getShoppingListByCompleteDateQueryResponse.ShoppingList = shoppingListDtos;
-        getShoppingListByCompleteDateQueryResponse.IsSuccess = true;
+        getShoppingListByCompleteDateQueryResponse.IsSuccess = shoppingLists!=null;
 
         return getShoppingListByCompleteDateQueryResponse;
     }

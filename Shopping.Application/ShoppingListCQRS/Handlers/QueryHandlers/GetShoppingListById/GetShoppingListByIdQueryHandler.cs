@@ -31,7 +31,7 @@ public class GetShoppingListByIdQueryHandler:IRequestHandler<GetShoppingListById
        
 
         getShoppingListByIdQueryResponse.ShoppingList = shoppingListDto;
-        getShoppingListByIdQueryResponse.IsSuccess = true;
+        getShoppingListByIdQueryResponse.IsSuccess = shoppingLists!=null;
 
         return getShoppingListByIdQueryResponse;
     }

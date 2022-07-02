@@ -27,7 +27,7 @@ public class GetProductsByShoppingListIdQueryHandler:IRequestHandler<GetProducts
         var productDtos = _mapper.Map<List<ProductDto>>(products);
 
         getProductByShoppingListIdQueryResponse.Products = productDtos;
-        getProductByShoppingListIdQueryResponse.IsSuccess = true;
+        getProductByShoppingListIdQueryResponse.IsSuccess = products!=null;
         
         return getProductByShoppingListIdQueryResponse;
         

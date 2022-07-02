@@ -31,7 +31,7 @@ public class AdminGetShoppingListsQueryHandler:IRequestHandler<AdminGetShoppingL
         var adminGetShoppingListsQueryResponse = new AdminGetShoppingListsQueryResponse();
         
         byte[] cachedBytes = _distributedCache.GetAsync("adminShoppingLists").Result;
-        if (cachedBytes == null)
+        if (cachedBytes == null || String.IsNullOrEmpty(Encoding.UTF8.GetString(cachedBytes)))
         {
             var shoppingListDtos = new List<ShoppingListDto>();
             var shoppingLists =  await _shoppingListRepository.AdminGetAll();
@@ -45,7 +45,7 @@ public class AdminGetShoppingListsQueryHandler:IRequestHandler<AdminGetShoppingL
             }
 
             adminGetShoppingListsQueryResponse.ShoppingLists = shoppingListDtos;
-            adminGetShoppingListsQueryResponse.IsSuccess = true;
+            adminGetShoppingListsQueryResponse.IsSuccess = shoppingLists!=null;
 
             string jsonText = JsonSerializer.Serialize(shoppingListDtos);
             await _distributedCache.SetAsync("adminShoppingLists", Encoding.UTF8.GetBytes(jsonText), token: cancellationToken);
@@ -55,7 +55,7 @@ public class AdminGetShoppingListsQueryHandler:IRequestHandler<AdminGetShoppingL
             string jsonText = Encoding.UTF8.GetString(cachedBytes);
             var shoppingListDtos = JsonSerializer.Deserialize<List<ShoppingListDto>>(jsonText);
             adminGetShoppingListsQueryResponse.ShoppingLists=shoppingListDtos;
-            adminGetShoppingListsQueryResponse.IsSuccess = true;
+            adminGetShoppingListsQueryResponse.IsSuccess = shoppingListDtos!=null;
         }
 
         return adminGetShoppingListsQueryResponse;

@@ -40,7 +40,7 @@ public class
         }
 
         getShoppingListByDescriptionQueryResponse.ShoppingList = shoppingListDtos;
-        getShoppingListByDescriptionQueryResponse.IsSuccess = true;
+        getShoppingListByDescriptionQueryResponse.IsSuccess = shoppingLists!=null;
 
         return getShoppingListByDescriptionQueryResponse;
     }

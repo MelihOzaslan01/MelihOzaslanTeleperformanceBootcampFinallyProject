@@ -28,12 +28,12 @@ public class GetProductsQueryHandler:IRequestHandler<GetProductsQueryRequest,Get
         var getProductsQueryResponse = new GetProductsQueryResponse();
         
         byte[] cachedBytes = _distributedCache.GetAsync("products").Result;
-        if (cachedBytes == null)
+        if (cachedBytes == null || String.IsNullOrEmpty(Encoding.UTF8.GetString(cachedBytes)))
         {
             var products =  await _productRepository.GetAll();
             var productDtos = _mapper.Map<List<ProductDto>>(products);
             getProductsQueryResponse.Products = productDtos;
-            getProductsQueryResponse.IsSuccess = true;
+            getProductsQueryResponse.IsSuccess = products!=null;
 
             string jsonText = JsonSerializer.Serialize(productDtos);
             await _distributedCache.SetAsync("products", Encoding.UTF8.GetBytes(jsonText), token: cancellationToken);
@@ -43,7 +43,7 @@ public class GetProductsQueryHandler:IRequestHandler<GetProductsQueryRequest,Get
             string jsonText = Encoding.UTF8.GetString(cachedBytes);
             var products = JsonSerializer.Deserialize<List<ProductDto>>(jsonText);
             getProductsQueryResponse.Products=products;
-            getProductsQueryResponse.IsSuccess = true;
+            getProductsQueryResponse.IsSuccess = products!=null;
         }
 
         return getProductsQueryResponse;

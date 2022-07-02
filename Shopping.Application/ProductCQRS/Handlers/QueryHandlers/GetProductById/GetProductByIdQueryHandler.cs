@@ -26,7 +26,7 @@ public class GetProductByIdQueryHandler:IRequestHandler<GetProductByIdQueryReque
         var productDto = _mapper.Map<ProductDto>(product);
         
         getProductByIdQueryResponse.Product = productDto;
-        getProductByIdQueryResponse.IsSuccess = true;
+        getProductByIdQueryResponse.IsSuccess = product!=null;
         
         return getProductByIdQueryResponse;    
     }
