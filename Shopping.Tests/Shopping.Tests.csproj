@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bogus" Version="34.0.2" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.6" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+      <PackageReference Include="Moq" Version="4.18.1" />
+      <PackageReference Include="xunit" Version="2.4.2-pre.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\ShoppingList" />
+      <Folder Include="Controllers\User" />
+      <Folder Include="Services\Auth" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shopping.API\Shopping.API.csproj" />
+      <ProjectReference Include="..\Shopping.Application\Shopping.Application.csproj" />
+      <ProjectReference Include="..\Shopping.Domain\Shopping.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
